@@ -1,13 +1,13 @@
 from pymongo import MongoClient
+import os
 
 
 class MongoDb:
     def __init__(self):
-        # conn = MongoClient('mongodb://localhost:27017/')
-        conn = MongoClient('mongodb://ungrwlg3vud6c1pjrlyp:folY3nYNsaa8oTeHeQpU@'
-                           'bfvqhm9nnuqpq7o-mongodb.services.clever-cloud.com:27017/bfvqhm9nnuqpq7o')
-        # self.db = conn['carwler']
-        self.db = conn['bfvqhm9nnuqpq7o']
+        host = os.getenv('MONGODB_ADDON_URI') or 'mongodb://localhost:27017/'
+        db_name = os.getenv('MONGODB_ADDON_DB') or 'carwler'
+        conn = MongoClient(host)
+        self.db = conn[db_name]
         self.brands_col = self.db['brands']
 
     def insert_data(self, rows):
