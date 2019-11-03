@@ -1,8 +1,8 @@
 {
   "build": {
-    "folder": "api"
+    "folder": "/"
   },
   "deploy": {
-    "module": "main:app"
+    "module": "api.main:app"
   }
 }
