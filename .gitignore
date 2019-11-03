@@ -106,4 +106,8 @@ venv.bak/
 # project related
 *.json
 *.csv
+.idea
+.vscode
+carwler.egg-info
+.DS_Store
 
