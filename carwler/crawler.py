@@ -182,10 +182,9 @@ class CrawlCarWale:
     @staticmethod
     def save_to_mongo(file):
         mongo_db = MongoDb()
-        mongo_db.connect()
         with open(file) as json_file:
             data = json.load(json_file)
-            mongo_db.insert_data('brands', data)
+            mongo_db.insert_data(data)
 
     @staticmethod
     def save_to_db(file):
@@ -258,5 +257,5 @@ class CrawlZigWheels:
 
 if __name__ == "__main__":
     crawler = CrawlCarWale()
-    crawler.crawl_brands()
+    # crawler.crawl_brands()
     crawler.save_to_mongo('data.json')

@@ -3,14 +3,17 @@ from pymongo import MongoClient
 
 class MongoDb:
     def __init__(self):
-        conn = MongoClient('mongodb://localhost:27017/')
-        self.db = conn['carwler']
+        # conn = MongoClient('mongodb://localhost:27017/')
+        conn = MongoClient('mongodb://ungrwlg3vud6c1pjrlyp:folY3nYNsaa8oTeHeQpU@'
+                           'bfvqhm9nnuqpq7o-mongodb.services.clever-cloud.com:27017/bfvqhm9nnuqpq7o')
+        # self.db = conn['carwler']
+        self.db = conn['bfvqhm9nnuqpq7o']
         self.brands_col = self.db['brands']
 
-    def insert_data(self, collection_name, rows):
-        collection = self.db[collection_name]
+    def insert_data(self, rows):
+        collection = self.brands_col
         x = collection.insert_many(rows)
-        print('For collection: {collection} inserted ids: {ids}'.format(collection=collection_name, ids=x.inserted_ids))
+        print('inserted ids: {ids}'.format(ids=x.inserted_ids))
 
     def get_brands(self):
         data = list(self.brands_col.find({}, {'_id': 0, 'name': 1}))
