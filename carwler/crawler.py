@@ -66,10 +66,7 @@ class CrawlCarWale:
         return {'specifications': specs_obj, 'features': features_obj}
 
     def crawl_car(self, car_name, car_link):
-        # TODO: find type -> Hatchback/Sedan etc.
-        print(car_name, car_link)
         car_url = self.get_car_url(car_link)
-        print('url', car_url)
         req = requests.get(car_url)
         soup = BeautifulSoup(req.text, features='html5lib')
         variant_list = []
@@ -87,6 +84,7 @@ class CrawlCarWale:
                 variant_link = variant.find('div', {'class': 'variant__name'}).find('a').get('href')
                 variant_obj['link'] = variant_link
                 variant_obj['short_name'] = variant_link[len(car_link): -1]
+                print('Variant: {}'.format(variant_obj['name']))
                 variant_obj['short_specs'] = variant.find('span', {'class': 'variant__specs'}).text
                 variant_obj['price'] = variant.find('span', {'class': 'variant__price'}).text
                 variant_details = self.crawl_variant(variant_link)
@@ -96,14 +94,12 @@ class CrawlCarWale:
 
         return variant_list
 
-    def crawl_brands(self):
+    def crawl_brands(self, save_to_file):
         brands = Brands()
         result = []
-        parse_brands = ['marutisuzuki', 'honda', 'hyundai', 'tata', 'toyota', 'mahindra', 'renault', 'ford']
+        # parse_brands = ['marutisuzuki', 'honda', 'hyundai', 'tata', 'toyota', 'mahindra', 'renault', 'ford']
+        parse_brands = ['kia', 'volkswagen']
         parse_models = []
-        # parse_models = ['Maruti Suzuki Swift', 'Maruti Suzuki Baleno', 'Maruti Suzuki Dzire',
-        #                 'Hyundai Grand i10 Nios', 'Hyundai Elite i20', 'Honda Amaze', 'Tata Tiago',
-        #                 'Hyundai Venue', 'Tata Nexon']
         for brand in parse_brands:
             brand_data = {}
             print('## Brand', brand)
@@ -131,7 +127,7 @@ class CrawlCarWale:
             brand_data['cars'] = cars
             result.append(brand_data)
 
-        with open('data.json', 'w') as file:
+        with open(save_to_file, 'w') as file:
             json.dump(result, file)
 
     @staticmethod
@@ -257,5 +253,6 @@ class CrawlZigWheels:
 
 if __name__ == "__main__":
     crawler = CrawlCarWale()
-    # crawler.crawl_brands()
-    crawler.save_to_mongo('data.json')
+    filename = 'data2.json'
+    # crawler.crawl_brands(filename)
+    crawler.save_to_mongo(filename)

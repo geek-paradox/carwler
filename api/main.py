@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from carwler.mongo_db import MongoDb
 
 app = Flask(__name__)
+CORS(app, support_credentials=True)
 
 
 @app.route('/')

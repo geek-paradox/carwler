@@ -104,8 +104,8 @@ venv.bak/
 .mypy_cache/
 
 # project related
-data.json
-fav.json
+data*.json
+fav*.json
 *.csv
 .idea
 .vscode
